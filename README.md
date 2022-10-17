@@ -2,7 +2,7 @@
 
 ## About The Project
 
-This project aims to show how to create scheduled rules in AWS EventBridge to automate every night the auto-shutdown and every day the startup of all EC2 instances on working days whose tag with key "running-always" has the value "no".
+This project aims to show how to create scheduled rules in AWS EventBridge to automate every night the auto-shutdown and every day the startup of all EC2 instances on working days whose tag with key "always-running" has the value "no".
 By tuning off instances at night and weekends we can reduce the AWS bill.
 
 ## Prerequistes
@@ -215,8 +215,8 @@ echo $RUNTIME
 echo $TIMEOUT
 ```
 
-We'll create the Lambda function that stops nightly all EC2 instances tagged as running-always=no on working days.
-Later we'll do the same with the Lambda that starts daily all EC2 instnaces tagged as running-always=no on working days.
+We'll create the Lambda function that stops nightly all EC2 instances tagged as always-running=no on working days.
+Later we'll do the same with the Lambda that starts daily all EC2 instnaces tagged as always-running=no on working days.
 The Python code is contained in files both lambda_function_stop.py and lambda_start.py.
 
 We'll need to zip it in order to pass it to the Lambda function through the AWS CLI application.
@@ -360,7 +360,7 @@ CRON_EXPRESSION='cron(0 9 ? * * *)'
 aws events put-rule --name $RULE_NAME --schedule-expression $CRON_EXPRESSION --profile $PROFILE
 ```
 
-We can list the instances and see if one of them stopped (tag running-always=no).
+We can list the instances and see if one of them stopped (tag always-running=no).
 ```sh
 aws ec2 describe-instances --profile $PROFILE | jq ".Reservations[].Instances[] | [.InstanceId, .State.Name, (.Tags[]|select(.Key==\"$TAG_NAME\")|.Value)]"
 ```
