@@ -15,7 +15,7 @@ If you already have an AWS profile created for other purposes, backup your ~/.aw
 ```sh
 mkdir ~/.aws
 echo -e "[profile default]\nregion = us-east-1\noutput = json" > ~/.aws/config
-echo -e "[default]\naws_access_key_id = AWS_ACCESS_KEY  >\naws_secret_access_key = AWS_SECRET_KEY" > ~/.aws/credentials
+echo -e "[default]\naws_access_key_id = AWS_ACCESS_KEY >\naws_secret_access_key = AWS_SECRET_KEY" > ~/.aws/credentials
 ```
 
 If you prefer to create your infrastructure in a different region than "us-east-1", feel free to change it in the config file.
@@ -359,7 +359,7 @@ aws ec2 describe-instances | jq ".Reservations[].Instances[] | [.InstanceId, .St
 The following command shows how to retrieve base64-encoded logs for Lambda function StopEC2Instances.
 ```sh
 FUNCTION_NAME=StopEC2Instances
-aws lambda invoke --function-name $FUNCTION_NAME out --log-type Tail --query 'LogResult' --output text |  base64 -d
+aws lambda invoke --function-name $FUNCTION_NAME out --log-type Tail --query 'LogResult' --output text | base64 -d
 ```
 
 Let's change the cron expression for the StartEC2InstancesDaily event rule to a different time.
@@ -378,7 +378,7 @@ aws ec2 describe-instances | jq ".Reservations[].Instances[] | [.InstanceId, .St
 Retrieve the base64-encoded logs for Lambda function StartEC2Instances.
 ```sh
 FUNCTION_NAME=StartEC2Instances
-aws lambda invoke --function-name $FUNCTION_NAME out --log-type Tail --query 'LogResult' --output text |  base64 -d
+aws lambda invoke --function-name $FUNCTION_NAME out --log-type Tail --query 'LogResult' --output text | base64 -d
 ```
 
 Now we can finally set the cron expressions to their original values.
